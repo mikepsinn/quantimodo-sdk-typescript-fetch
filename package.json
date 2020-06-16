@@ -1,0 +1,30 @@
+{
+  "name": "@quantimodo/quantimodo-sdk-typescript-fetch",
+  "version": "6.0.0",
+  "description": "A Typescript Fetch client to retrieve and store life-tracking data using the QuantiModo API",
+  "author": "QuantiModo",
+  "keywords": [
+    "fetch",
+    "typescript",
+    "quantimodo",
+    "@quantimodo/quantimodo-sdk-typescript-fetch"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
+    "portable-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "8.10.60",
+    "typescript": "2.9.2"
+  },
+  "publishConfig": {
+    "registry": "https://skimdb.npmjs.com/registry"
+  }
+}
