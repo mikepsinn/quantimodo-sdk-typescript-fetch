@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { StoreApiFactory } from '@swagger/typescript-fetch-petstore';
-import { Configuration } from '@swagger/typescript-fetch-petstore';
+import { DefaultApi } from '../apis';
+import { Configuration } from '../configuration';
 
 let config: Configuration;
 

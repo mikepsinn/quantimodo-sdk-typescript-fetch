@@ -1,48 +1,35 @@
 import { expect } from 'chai';
-import { PetApiFactory, Pet, Category } from '@swagger/typescript-fetch-petstore';
-import { Configuration } from '@swagger/typescript-fetch-petstore';
+import { DefaultApi } from '../apis';
 
-let config: Configuration;
-
-before(function () {
-    config = new Configuration();
-    config.accessToken = "foobar";
-    config.apiKey = (securityName: string) => {
-        // for multiple apiKey security
-        if (securityName === "api_key") {
-            return "foobar";
-        }
-        return;
-    };
-    config.username = "foo";
-    config.password = "bar";
-});
-
-describe('PetApiFactory', () => {
-
+describe('PetApi', () => {
 
     function runSuite(description: string, requestOptions?: any): void {
 
         describe(description, () => {
 
+            let api: PetApi;
             const fixture: Pet = createTestFixture();
 
+            beforeEach(() => {
+                api = new PetApi();
+            });
+
             it('should add and delete Pet', () => {
-                return PetApiFactory(config).addPet(fixture, requestOptions).then(() => {
+                return api.addPet(fixture, requestOptions).then(() => {
                 });
             });
 
             it('should get Pet by ID', () => {
-                return PetApiFactory(config).getPetById(fixture.id, requestOptions).then((result: Pet) => {
+                return api.getPetById(fixture.id, requestOptions).then((result: Pet) => {
                     return expect(result).to.deep.equal(fixture);
                 });
             });
 
             it('should update Pet by ID', () => {
-                return PetApiFactory(config).getPetById(fixture.id, requestOptions).then((result: Pet) => {
+                return api.getPetById(fixture.id, requestOptions).then((result: Pet) => {
                     result.name = 'newname';
-                    return PetApiFactory(config).updatePet(result, requestOptions).then(() => {
-                        return PetApiFactory(config).getPetById(fixture.id, requestOptions).then((result: Pet) => {
+                    return api.updatePet(result, requestOptions).then(() => {
+                        return api.getPetById(fixture.id, requestOptions).then((result: Pet) => {
                             return expect(result.name).to.deep.equal('newname');
                         });
                     });
@@ -50,16 +37,17 @@ describe('PetApiFactory', () => {
             });
 
             it('should delete Pet', () => {
-                return PetApiFactory(config).deletePet(fixture.id, requestOptions);
+                return api.deletePet(fixture.id, requestOptions);
             });
 
             it('should not contain deleted Pet', () => {
-                return PetApiFactory(config).getPetById(fixture.id, requestOptions).then((result: Pet) => {
+                return api.getPetById(fixture.id, requestOptions).then((result: Pet) => {
                     return expect(result).to.not.exist;
                 }, (err: any) => {
                     return expect(err).to.exist;
                 });
             });
+
         });
     }
 
